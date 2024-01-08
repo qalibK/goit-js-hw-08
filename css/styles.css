@@ -1,0 +1,28 @@
+.gallery {
+  list-style-type: none;
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 24px;
+  column-gap: 24px;
+  width: min-content;
+  margin: 0 auto;
+  padding: 24px 50px;
+}
+
+.gallery-image {
+  width: 360px;
+  height: 200px;
+  transition: 0.6s;
+}
+
+.gallery-image:hover {
+  transform: scale(1.06);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
