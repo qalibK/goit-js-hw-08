@@ -69,7 +69,7 @@ const galleryMarkup = createGalleryImages(images);
 
 galleryContainer.insertAdjacentHTML("beforeend", galleryMarkup);
 
-galleryContainer.addEventListener("click", onGalleryContainerMarkup);
+galleryContainer.addEventListener("click", onImageClick);
 
 function createGalleryImages(images) {
   return images
@@ -90,11 +90,23 @@ function createGalleryImages(images) {
     .join("");
 }
 
-function onGalleryContainerMarkup(event) {
+function onImageClick(event) {
   event.preventDefault();
   const isImageOpenedEl = event.target.classList.contains(".gallery-image");
+  const imageSource = event.target.dataset.source;
 
-  if (!isImageOpenedEl) {
-    return console.log(event.target.dataset.source);
+  if (event.target.nodeName !== "IMG") {
+    return;
   }
+
+  const instance = basicLightbox.create(`
+    <img src="${imageSource}" width="1112" height="640">
+`);
+  instance.show();
+
+  galleryContainer.addEventListener("keydown", (event) => {
+    if (event.code === "Escape") {
+      instance.close();
+    }
+  });
 }
