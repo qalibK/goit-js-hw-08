@@ -91,22 +91,32 @@ function createGalleryImages(images) {
 }
 
 function onImageClick(event) {
-  event.preventDefault();
-  const isImageOpenedEl = event.target.classList.contains(".gallery-image");
-  const imageSource = event.target.dataset.source;
-
   if (event.target.nodeName !== "IMG") {
     return;
   }
 
-  const instance = basicLightbox.create(`
-    <img src="${imageSource}" width="1112" height="640">
-`);
+  event.preventDefault();
+  const imageSource = event.target.dataset.source;
+  const imageAlt = event.target.alt;
+
+  const instance = basicLightbox.create(
+    `<img src="${imageSource}" width="1112" height="640" alt="${imageAlt}">`,
+    {
+      onShow: (instance) => {
+        window.addEventListener("keydown", onKeyDown);
+      },
+      onClose: (instance) => {
+        window.removeEventListener("keydown", onKeyDown);
+      },
+    }
+  );
+
   instance.show();
 
-  galleryContainer.addEventListener("keydown", (event) => {
+  function onKeyDown(event) {
     if (event.code === "Escape") {
       instance.close();
+      console.log("pressed");
     }
-  });
+  }
 }
