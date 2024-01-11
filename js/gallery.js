@@ -116,7 +116,6 @@ function onImageClick(event) {
   function onKeyDown(event) {
     if (event.code === "Escape") {
       instance.close();
-      console.log("pressed");
     }
   }
 }
